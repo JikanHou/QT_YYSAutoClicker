@@ -42,7 +42,6 @@ bool BGWorker:: clickImgUntilDisappear(const cv:: Mat &img, int timeOut){
     cv:: Point location;
 
     while (!stop && startTime.secsTo(QDateTime:: currentDateTime()) <= timeOut){
-        QThread:: msleep(50);
         // take current screenshot
         screenshot("gameScreenshot.png");
         cv:: cvtColor(cv:: imread("gameScreenshot.png"), src, cv:: COLOR_RGB2GRAY);
@@ -52,6 +51,7 @@ bool BGWorker:: clickImgUntilDisappear(const cv:: Mat &img, int timeOut){
 
         // image does not exist
         if (factor < positiveThreshold){
+            QThread:: msleep(50);
             continue;
         }
 
@@ -59,7 +59,6 @@ bool BGWorker:: clickImgUntilDisappear(const cv:: Mat &img, int timeOut){
         int deltax, deltay, x, y;
 
         do{
-            QThread:: msleep(50);
             deltax = randomNumber(0, img.cols);
             deltay = randomNumber(0, img.rows);
             x = location.x + deltax;
@@ -67,7 +66,7 @@ bool BGWorker:: clickImgUntilDisappear(const cv:: Mat &img, int timeOut){
             press(x, y);
 
             // check for resp
-            QThread:: msleep(randomNumber(200, 300));
+            QThread:: msleep(randomNumber(1000, 1500));
             screenshot("gameScreenshot.png");
             cv:: cvtColor(cv:: imread("gameScreenshot.png"), src, cv:: COLOR_RGB2GRAY);
             templateMatch(src, img, &factor, &location);

@@ -145,6 +145,11 @@ void MainWindow:: startButtonClicked(){
     connect(currentWorker, &BGWorker::showMsg, this, &MainWindow:: showMsg);
     connect(currentWorker, &BGWorker::processDone, this, &MainWindow:: processDone);
     connect(currentThread, &QThread::started, currentWorker, &BGWorker::run);
+
+    ui -> loadScreenshotBtn -> setEnabled(false);
+    ui -> ScreenShotBtn -> setEnabled(false);
+    ui -> endScreenshotLoad -> setEnabled(false);
+    ui -> endScreenshotBtn -> setEnabled(false);
     currentThread -> start();
 
 
@@ -294,7 +299,10 @@ void MainWindow::on_stopBtn_clicked(){
         delete currentWorker;
         currentWorker = nullptr;
     }
-
+    ui -> loadScreenshotBtn -> setEnabled(true);
+    ui -> ScreenShotBtn -> setEnabled(true);
+    ui -> endScreenshotLoad -> setEnabled(true);
+    ui -> endScreenshotBtn -> setEnabled(true);
 }
 
 
